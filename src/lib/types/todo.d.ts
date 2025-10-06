@@ -3,7 +3,7 @@ import { Priority } from "./priority"
 export interface Todo {
   id: number
   description: string
-  due_date: Date
+  date_due?: Date
   priority: Priority
   completed: boolean
 }
