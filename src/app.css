@@ -1,3 +1,12 @@
+:root {
+  --danger-background: rgb(156, 56, 56);
+  --urgent-background: rgb(171, 62, 109);
+  --important-background: rgb(183, 107, 107);
+  --normal-background: rgb(162, 188, 173);
+  --optional-background: rgb(156, 165, 197);
+}
+
+
 @media(prefers-color-scheme: light) {
   /*change later to actual light scheme*/
   :root {

@@ -1,6 +1,7 @@
 <script lang="ts">
 import favicon from "$lib/assets/favicon.svg";
-import '../app.css'
+import "../app.css";
+import Navbar from "$lib/components/Navbar.svelte";
 
 let { children } = $props();
 </script>
@@ -10,7 +11,7 @@ let { children } = $props();
 </svelte:head>
 
 
-<h1>This is a global layout</h1>
+<Navbar />
 {@render children?.()}
 
 <style>
@@ -20,9 +21,6 @@ let { children } = $props();
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-  }
-
-  h1 {
-    color: var(--global-foreground);
+    width: 100vw;
   }
 </style>
