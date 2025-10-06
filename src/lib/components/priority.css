@@ -1,0 +1,24 @@
+.priority {
+  color: var(--global-background);
+  width: 32px;
+  height: 32px;
+  margin: 0 0.4em;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.urgent {
+  background-color: var(--urgent-background);
+}
+
+.important {
+  background-color: var(--important-background);
+}
+
+.normal {
+  background-color: var(--normal-background);
+}
+
+.optional {
+  background-color: var(--optional-background);
+}

@@ -2,6 +2,8 @@
 import Burger from "$lib/assets/burger.svelte";
 import Eye from "$lib/assets/eye.svelte";
 import User from "$lib/assets/user.svelte";
+
+import './priority.css'
 </script>
 
 <nav class="nav">
@@ -59,31 +61,6 @@ nav {
   color: var(--global-foreground);
   width: 54px;
   margin: 0 0 0 0.1em;
-}
-
-.priority {
-  color: var(--global-background);
-  width: 32px;
-  max-height: 32px;
-  margin: 0 0.4em;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.urgent {
-  background-color: var(--urgent-background);
-}
-
-.important {
-  background-color: var(--important-background);
-}
-
-.normal {
-  background-color: var(--normal-background);
-}
-
-.optional {
-  background-color: var(--optional-background);
 }
 
 </style>

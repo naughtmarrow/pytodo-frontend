@@ -1,7 +1,6 @@
 <script lang="ts">
 import favicon from "$lib/assets/favicon.svg";
 import "../app.css";
-import Navbar from "$lib/components/Navbar.svelte";
 
 let { children } = $props();
 </script>
@@ -10,8 +9,6 @@ let { children } = $props();
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-
-<Navbar />
 {@render children?.()}
 
 <style>
@@ -22,5 +19,12 @@ let { children } = $props();
     background-size: cover;
     height: 100vh;
     width: 100vw;
+
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
   }
 </style>

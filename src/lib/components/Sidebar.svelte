@@ -6,72 +6,71 @@ categorized per time frame
 -->
 
 <script lang="ts">
-import { TodoList } from "$lib/stores/todo_store";
+import { TodoList } from "$lib/stores/todo_store.svelte";
 import { onMount } from "svelte";
 import type { TimeFrame } from "$lib/types/timeframe";
 
 const timeframes: Map<number, TimeFrame> = new Map();
 
 onMount(() => {
-  const current_time: number = Date.now()
-  const current_date: Date = new Date(current_time)
+  const current_time: number = Date.now();
+  const current_date: Date = new Date(current_time);
 
-  const today = new Date(current_date)
+  const today = new Date(current_date);
   today.setHours(23, 59, 59);
 
-  const tomorrow = new Date(current_date)
-  tomorrow.setHours(23, 59, 59)
-  tomorrow.setDate(today.getDate() + 1)
+  const tomorrow = new Date(current_date);
+  tomorrow.setHours(23, 59, 59);
+  tomorrow.setDate(today.getDate() + 1);
 
-  const firstDayWeek = new Date(current_date)
+  const firstDayWeek = new Date(current_date);
   // set to first day of the current week
-  firstDayWeek.setHours(0,0,0)
-  firstDayWeek.setDate(firstDayWeek.getDate() - firstDayWeek.getDay())
+  firstDayWeek.setHours(0, 0, 0);
+  firstDayWeek.setDate(firstDayWeek.getDate() - firstDayWeek.getDay());
 
-  const firstDayMonth = new Date(current_date)
+  const firstDayMonth = new Date(current_date);
   // set to first day of the current month
-  firstDayMonth.setHours(0,0,0)
-  firstDayWeek.setDate(1)
-
+  firstDayMonth.setHours(0, 0, 0);
+  firstDayWeek.setDate(1);
 
   for (let todo of TodoList) {
     if (todo.date_due === undefined) {
-      timeframes.set(todo.id, "NODATE")
-      continue
+      timeframes.set(todo.id, "NODATE");
+      continue;
     }
 
-    let time_due = todo.date_due.getTime()
+    let time_due = todo.date_due.getTime();
 
-    let date_due = new Date(time_due)
-    date_due.setHours(0,0,0) // the date just needs the day/month
+    let date_due = new Date(time_due);
+    date_due.setHours(0, 0, 0); // the date just needs the day/month
 
     if (time_due - current_time < today.getTime()) {
-        timeframes.set(todo.id, "TODAY")
-        continue
+      timeframes.set(todo.id, "TODAY");
+      continue;
     }
 
     if (time_due - current_time < tomorrow.getTime()) {
-        timeframes.set(todo.id, "TOMORROW")
-        continue
+      timeframes.set(todo.id, "TOMORROW");
+      continue;
     }
 
     // set to the first day of the week of the todo date
     date_due.setDate(date_due.getDate() - date_due.getDay());
     if (date_due.getTime() === firstDayWeek.getTime()) {
       // if they are the same day then the todo's due week is the same as the current week
-      timeframes.set(todo.id, "WEEK")
-      continue
+      timeframes.set(todo.id, "WEEK");
+      continue;
     }
 
     // set to the first day of the month
-    date_due.setDate(1)
+    date_due.setDate(1);
     if (date_due.getTime() === firstDayMonth.getTime()) {
       // same as before but for months
-      timeframes.set(todo.id, "MONTH")
-      continue
+      timeframes.set(todo.id, "MONTH");
+      continue;
     }
 
-    timeframes.set(todo.id, "LATER")
+    timeframes.set(todo.id, "LATER");
   }
 });
 </script>
@@ -79,9 +78,15 @@ onMount(() => {
 <div class="sidebar"> 
   <h1>Todo</h1>
   <ul>
+    {#each TodoList as todo}
+      <li>{timeframes.get(todo.id)} -> {todo.description}</li>
+    {/each}
   </ul>
 </div>
 
 <style>
-
+  .sidebar {
+    width: 100%;
+    height: 100%;
+  }
 </style>
