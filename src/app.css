@@ -1,3 +1,27 @@
+@media(prefers-color-scheme: light) {
+  /*change later to actual light scheme*/
+  :root {
+    --global-background: rgba(19, 22, 28, 1);
+    --global-background-gradient: linear-gradient(0deg,rgba(137, 148, 151, 0.2) 0%, rgba(41, 46, 54, 0.5) 25%,  rgba(19, 22, 28, 1) 50%, rgba(19, 22, 28, 1) 100%);
+    --global-foreground: rgba(232, 250, 247, 1);
+    --secondary-background: rgba(41, 46, 54, 1);
+    --faded-global-foreground: rgba(232, 250, 247, 0.3);
+    --faded-secondary-background: rgba(41, 46, 54, 0.4);
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  :root {
+    --global-background: rgba(19, 22, 28, 1);
+    --global-background-gradient: linear-gradient(0deg,rgba(137, 148, 151, 0.2) 0%, rgba(41, 46, 54, 0.5) 25%,  rgba(19, 22, 28, 1) 50%, rgba(19, 22, 28, 1) 100%);
+    --global-foreground: rgba(232, 250, 247, 1);
+    --secondary-background: rgba(41, 46, 54, 1);
+    --faded-global-foreground: rgba(232, 250, 247, 0.3);
+    --faded-secondary-background: rgba(41, 46, 54, 0.4);
+  }
+}
+
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
