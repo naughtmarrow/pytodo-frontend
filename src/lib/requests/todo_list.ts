@@ -35,13 +35,20 @@ const sample_list: Todo[] = [
     date_due: new Date("October 29, 2025 03:24:00"),
     priority: "NORMAL",
     completed: false,
+  },
+  {
+    id: 5,
+    description: "some other test todo this month",
+    date_due: new Date("October 7, 2025 19:24:00"),
+    priority: "OPTIONAL",
+    completed: false,
   }
 ]
 
 export const getTodos = () => {
   resetList()
   for (let x of sample_list) {
-    TodoList.list.push(x)
+    TodoList.map.set(x.id, x)
     TimeCategorizer(x)
   }
 }

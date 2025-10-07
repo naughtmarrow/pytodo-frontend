@@ -4,7 +4,28 @@ import Navbar from "$lib/components/Navbar.svelte";
 import Sidebar from "$lib/components/Sidebar.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
+import type { Todo } from "$lib/types/todo";
 
+import { dueToday } from "$lib/stores/todo_store.svelte";
+import { dueTomorrow } from "$lib/stores/todo_store.svelte";
+import { dueThisWeek } from "$lib/stores/todo_store.svelte";
+import { dueThisMonth } from "$lib/stores/todo_store.svelte";
+import { dueLater } from "$lib/stores/todo_store.svelte";
+import { dueIndefinite } from "$lib/stores/todo_store.svelte";
+
+const returnTodo = (id: number): Todo => {
+  const todo_obtained: Todo | undefined = TodoList.map.get(id);
+  if (todo_obtained === undefined) {
+    return {
+      id: 0,
+      description: "error",
+      priority: "URGENT",
+      completed: false,
+    };
+  } else {
+    return todo_obtained;
+  }
+};
 </script>
 
 <div class="content">
@@ -15,8 +36,23 @@ import { TodoList } from "$lib/stores/todo_store.svelte";
   <div class="right-side">
     <Navbar />
     <ul class="todo-list">
-      {#each TodoList.list as td}
-        <TodoCard {...td}/>
+      {#each dueToday.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "today"}}/>
+      {/each}
+      {#each dueTomorrow.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "tomorrow"}}/>
+      {/each}
+      {#each dueThisWeek.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "week"}}/>
+      {/each}
+      {#each dueThisMonth.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "month"}}/>
+      {/each}
+      {#each dueLater.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "later"}}/>
+      {/each}
+      {#each dueIndefinite.list as id }
+        <TodoCard {...{...returnTodo(id), timeframe: "indefinite"}}/>
       {/each}
     </ul>
   </div>

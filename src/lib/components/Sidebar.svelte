@@ -12,6 +12,9 @@ import { dueThisWeek } from "$lib/stores/todo_store.svelte";
 import { dueThisMonth } from "$lib/stores/todo_store.svelte";
 import { dueLater } from "$lib/stores/todo_store.svelte";
 import { dueIndefinite } from "$lib/stores/todo_store.svelte";
+
+import {TodoList} from "$lib/stores/todo_store.svelte";
+
 </script>
 
 <div class="sidebar"> 
@@ -20,43 +23,43 @@ import { dueIndefinite } from "$lib/stores/todo_store.svelte";
     <li>
       <h5>Due Today</h5>
       <hr>
-      {#each dueToday.list as todo}
-         <p>{todo.description}</p>
+      {#each dueToday.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
     <li>
       <h5>Due Tomorrow</h5>
       <hr>
-      {#each dueTomorrow.list as todo}
-         <p>{todo.description}</p>
+      {#each dueTomorrow.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
     <li>
       <h5>Due This Week</h5>
       <hr>
-      {#each dueThisWeek.list as todo}
-         <p>{todo.description}</p>
+      {#each dueThisWeek.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
     <li>
       <h5>Due This Month</h5>
       <hr>
-      {#each dueThisMonth.list as todo}
-         <p>{todo.description}</p>
+      {#each dueThisMonth.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
     <li>
       <h5>Due Later</h5>
       <hr>
-      {#each dueLater.list as todo}
-         <p>{todo.description}</p>
+      {#each dueLater.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
     <li>
       <h5>No Due Date</h5>
       <hr>
-      {#each dueIndefinite.list as todo}
-         <p>{todo.description}</p>
+      {#each dueIndefinite.list as id}
+         <p>{TodoList.map.get(id)?.description}</p>
       {/each}
     </li>
   </ul>

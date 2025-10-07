@@ -3,18 +3,54 @@ import Trash from "$lib/assets/trash.svelte";
 import type { Todo } from "$lib/types/todo";
 import "./priority.css";
 
-const todo: Todo = $props(); // receives a todo obj
+type _Props = Todo & { timeframe: string }
+
+const todo: _Props = $props(); // receives a todo obj
 
 const priority_string = todo.priority.toLowerCase();
 const priority_printable =
   String(priority_string).charAt(0).toUpperCase() +
   String(priority_string).slice(1); // just makes the first letter uppercase
+
+const calcHours = (time: number): number => {
+  const now = Date.now()
+  if (now >= time) {
+    return 0
+  }
+
+  return Math.round((time - now) / 1000 / 60 / 60)
+}
+
+const getDue = (timeframe: string):string => {
+  if (todo.date_due === undefined) {
+    return "whenever"
+  }
+
+  if (timeframe === "today") {
+    return "in " + calcHours(todo.date_due.getTime()).toString() + " hours"
+  }
+
+  if (timeframe === "tomorrow") {
+    return "tomorrow"
+  } 
+
+  if (timeframe === "week") {
+    return "this week"
+  }
+
+  if (timeframe === "month") {
+    return "this month"
+  }
+
+  return "later"
+}
+
 </script>
 
 <div class="todo-card">
   <div class="todo">
     <div class="top">
-      <p>Due in {todo.date_due?.getDay()}</p> <!-- for now (TODO: change to the timeframe or hours instead)-->
+      <p>Due {getDue(todo.timeframe)}</p> <!-- for now (TODO: change to the timeframe or hours instead)-->
       <div class="priority-show">
         <p>{priority_printable}</p>
       <div class="priority {priority_string}"></div>
