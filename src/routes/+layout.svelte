@@ -17,7 +17,9 @@ let { children } = $props();
     background-image: var(--global-background-gradient);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    background-attachment: fixed;
+    overflow: hidden;
+    min-height: 100vh;
     width: 100vw;
 
     font-family: "Roboto", sans-serif;

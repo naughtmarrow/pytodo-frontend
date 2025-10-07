@@ -90,6 +90,7 @@ const returnTodo = (id: number): Todo => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 }
 
 </style>
