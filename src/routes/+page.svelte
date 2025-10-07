@@ -15,7 +15,7 @@ import { TodoList } from "$lib/stores/todo_store.svelte";
   <div class="right-side">
     <Navbar />
     <ul class="todo-list">
-      {#each TodoList as td}
+      {#each TodoList.list as td}
         <TodoCard {...td}/>
       {/each}
     </ul>

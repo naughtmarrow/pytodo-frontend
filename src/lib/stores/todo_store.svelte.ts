@@ -1,19 +1,20 @@
 import type { Todo } from "$lib/types/todo";
 
-export let TodoList: Todo[] = $state([
-  {
-    id: 1,
-    description: "a test todo",
-    date_due: new Date("December 17, 2025 03:24:00"),
-    priority: "URGENT",
-    completed: false,
-  },
+// will only hold the ids to avoid repetition of data
+export let dueToday: { list: Todo[] } = $state({ list: [] });
+export let dueTomorrow: { list: Todo[] } = $state({ list: [] });
+export let dueThisWeek: { list: Todo[] } = $state({ list: [] });
+export let dueThisMonth: { list: Todo[] } = $state({ list: [] });
+export let dueLater: { list: Todo[] } = $state({ list: [] });
+export let dueIndefinite: { list: Todo[] } = $state({ list: [] });
 
-  {
-    id: 2,
-    description: "another test todo",
-    date_due: new Date("December 25, 2025 03:24:00"),
-    priority: "IMPORTANT",
-    completed: false,
-  }
-])
+export let TodoList: { list: Todo[] } = $state({ list: [] });
+export const resetList = () => {
+  dueToday.list = [];
+  dueTomorrow.list = [];
+  dueThisWeek.list = [];
+  dueThisMonth.list = [];
+  dueLater.list = [];
+  dueIndefinite.list = [];
+  TodoList.list = [];
+};
