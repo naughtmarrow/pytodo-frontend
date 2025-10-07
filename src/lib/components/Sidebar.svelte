@@ -8,9 +8,15 @@ categorized per time frame
 <script lang="ts">
 import { TodoList } from "$lib/stores/todo_store.svelte";
 import { onMount } from "svelte";
-import type { TimeFrame } from "$lib/types/timeframe";
+import type { Todo } from "$lib/types/todo"
 
-const timeframes: Map<number, TimeFrame> = new Map();
+// will only hold the ids to avoid repetition of data
+let dueToday: Todo[] = $state([]);
+let dueTomorrow: Todo[] = $state([]);
+let dueThisWeek: Todo[] = $state([]);
+let dueThisMonth: Todo[] = $state([]);
+let dueLater: Todo[] = $state([]);
+let dueIndefinite: Todo[] = $state([]);
 
 onMount(() => {
   const current_time: number = Date.now();
@@ -31,11 +37,11 @@ onMount(() => {
   const firstDayMonth = new Date(current_date);
   // set to first day of the current month
   firstDayMonth.setHours(0, 0, 0);
-  firstDayWeek.setDate(1);
+  firstDayMonth.setDate(1);
 
   for (let todo of TodoList) {
     if (todo.date_due === undefined) {
-      timeframes.set(todo.id, "NODATE");
+      dueIndefinite.push(todo);
       continue;
     }
 
@@ -44,13 +50,13 @@ onMount(() => {
     let date_due = new Date(time_due);
     date_due.setHours(0, 0, 0); // the date just needs the day/month
 
-    if (time_due - current_time < today.getTime()) {
-      timeframes.set(todo.id, "TODAY");
+    if (time_due < today.getTime()) {
+      dueToday.push(todo);
       continue;
     }
 
-    if (time_due - current_time < tomorrow.getTime()) {
-      timeframes.set(todo.id, "TOMORROW");
+    if (time_due < tomorrow.getTime()) {
+      dueTomorrow.push(todo);
       continue;
     }
 
@@ -58,7 +64,7 @@ onMount(() => {
     date_due.setDate(date_due.getDate() - date_due.getDay());
     if (date_due.getTime() === firstDayWeek.getTime()) {
       // if they are the same day then the todo's due week is the same as the current week
-      timeframes.set(todo.id, "WEEK");
+      dueThisWeek.push(todo);
       continue;
     }
 
@@ -66,11 +72,10 @@ onMount(() => {
     date_due.setDate(1);
     if (date_due.getTime() === firstDayMonth.getTime()) {
       // same as before but for months
-      timeframes.set(todo.id, "MONTH");
+      dueThisMonth.push(todo);
       continue;
     }
-
-    timeframes.set(todo.id, "LATER");
+    dueLater.push(todo);
   }
 });
 </script>
@@ -78,15 +83,59 @@ onMount(() => {
 <div class="sidebar"> 
   <h1>Todo</h1>
   <ul>
-    {#each TodoList as todo}
-      <li>{timeframes.get(todo.id)} -> {todo.description}</li>
-    {/each}
+    <li>
+      <h5>Due Today</h5>
+      <hr>
+      {#each dueToday as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
+    <li>
+      <h5>Due Tomorrow</h5>
+      <hr>
+      {#each dueTomorrow as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
+    <li>
+      <h5>Due This Week</h5>
+      <hr>
+      {#each dueThisWeek as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
+    <li>
+      <h5>Due This Month</h5>
+      <hr>
+      {#each dueThisMonth as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
+    <li>
+      <h5>Due Later</h5>
+      <hr>
+      {#each dueLater as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
+    <li>
+      <h5>No Due Date</h5>
+      <hr>
+      {#each dueIndefinite as todo}
+         <p>{todo.description}</p>
+      {/each}
+    </li>
   </ul>
-</div>
+ </div>
 
 <style>
   .sidebar {
     width: 100%;
     height: 100%;
   }
+
+  h1, h5, p {
+    color: var(--global-foreground);
+  }
+
 </style>
