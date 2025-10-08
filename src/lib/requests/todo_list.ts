@@ -4,7 +4,7 @@ import type { Todo } from "$lib/types/todo";
 import { resetList, TodoList } from "$lib/stores/todo_store.svelte";
 import { TimeCategorizer } from "$lib/helpers/time_sorts";
 
-const sample_list: Todo[] = [
+let sample_list: Todo[] = [
   {
     id: 1,
     description: "a test todo",
@@ -51,4 +51,7 @@ export const getTodos = () => {
     TodoList.map.set(x.id, x)
     TimeCategorizer(x)
   }
+}
+
+export const deleteTodo = (todo_id: number) => {
 }

@@ -10,7 +10,9 @@ import { showImportant } from "$lib/stores/todo_store.svelte";
 import { showNormal } from "$lib/stores/todo_store.svelte";
 import { showOptional } from "$lib/stores/todo_store.svelte";
 
-type _Props = Todo & { timeframe: string }
+import { deleteTodo } from "$lib/requests/todo_list";
+
+type _Props = Todo & { timeframe: string };
 
 const todo: _Props = $props(); // receives a todo obj
 
@@ -20,37 +22,37 @@ const priority_printable =
   String(priority_string).slice(1); // just makes the first letter uppercase
 
 const calcHours = (time: number): number => {
-  const now = Date.now()
+  const now = Date.now();
   if (now >= time) {
-    return 0
+    return 0;
   }
 
-  return Math.round((time - now) / 1000 / 60 / 60)
-}
+  return Math.round((time - now) / 1000 / 60 / 60);
+};
 
-const getDue = (timeframe: string):string => {
+const getDue = (timeframe: string): string => {
   if (todo.date_due === undefined) {
-    return "whenever"
+    return "whenever";
   }
 
   if (timeframe === "today") {
-    return "in " + calcHours(todo.date_due.getTime()).toString() + " hours"
+    return "in " + calcHours(todo.date_due.getTime()).toString() + " hours";
   }
 
   if (timeframe === "tomorrow") {
-    return "tomorrow"
-  } 
+    return "tomorrow";
+  }
 
   if (timeframe === "week") {
-    return "this week"
+    return "this week";
   }
 
   if (timeframe === "month") {
-    return "this month"
+    return "this month";
   }
 
-  return "later"
-}
+  return "later";
+};
 
 const returnShowable = (priority: Priority): boolean => {
   if (priority === "URGENT" && !showUrgent.value) {
@@ -75,7 +77,7 @@ const returnShowable = (priority: Priority): boolean => {
 <div class="todo-card">
   <div class="todo">
     <div class="top">
-      <p>Due {getDue(todo.timeframe)}</p> <!-- for now (TODO: change to the timeframe or hours instead)-->
+      <p>Due {getDue(todo.timeframe)}</p>
       <div class="priority-show">
         <p>{priority_printable}</p>
       <div class="priority {priority_string}"></div>
@@ -87,7 +89,7 @@ const returnShowable = (priority: Priority): boolean => {
 
   <div class="complete_delete">
     <input type="checkbox"> 
-    <button><Trash /></button>
+    <button onclick={() => deleteTodo(todo.id)}><Trash /></button>
   </div>
 </div>
 {/if}
