@@ -13,6 +13,13 @@ import { dueThisMonth } from "$lib/stores/todo_store.svelte";
 import { dueLater } from "$lib/stores/todo_store.svelte";
 import { dueIndefinite } from "$lib/stores/todo_store.svelte";
 
+import { showMainToday } from "$lib/stores/todo_store.svelte";
+import { showMainTomorrow } from "$lib/stores/todo_store.svelte";
+import { showMainThisWeek } from "$lib/stores/todo_store.svelte";
+import { showMainThisMonth } from "$lib/stores/todo_store.svelte";
+import { showMainLater } from "$lib/stores/todo_store.svelte";
+import { showMainIndefinite } from "$lib/stores/todo_store.svelte";
+
 const returnTodo = (id: number): Todo => {
   const todo_obtained: Todo | undefined = TodoList.map.get(id);
   if (todo_obtained === undefined) {
@@ -36,24 +43,41 @@ const returnTodo = (id: number): Todo => {
   <div class="right-side">
     <Navbar />
     <ul class="todo-list">
+      {#if showMainToday.value}
       {#each dueToday.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "today"}}/>
       {/each}
+      {/if}
+
+      {#if showMainTomorrow.value}
       {#each dueTomorrow.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "tomorrow"}}/>
       {/each}
+      {/if}
+
+      {#if showMainThisWeek.value}
       {#each dueThisWeek.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "week"}}/>
       {/each}
+      {/if}
+
+      {#if showMainThisMonth.value}
       {#each dueThisMonth.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "month"}}/>
       {/each}
+      {/if}
+
+      {#if showMainLater.value}
       {#each dueLater.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "later"}}/>
       {/each}
+      {/if}
+
+      {#if showMainIndefinite.value}
       {#each dueIndefinite.list as id }
         <TodoCard {...{...returnTodo(id), timeframe: "indefinite"}}/>
       {/each}
+      {/if}
     </ul>
   </div>
 

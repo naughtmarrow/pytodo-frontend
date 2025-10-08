@@ -38,8 +38,8 @@ const sample_list: Todo[] = [
   },
   {
     id: 5,
-    description: "some other test todo this month",
-    date_due: new Date("October 7, 2025 19:24:00"),
+    description: "some other test todo today",
+    date_due: new Date("October 8, 2025 2:24:00"),
     priority: "OPTIONAL",
     completed: false,
   }

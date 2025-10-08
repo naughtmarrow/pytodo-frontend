@@ -8,6 +8,8 @@ categorized per time frame
 <script lang="ts">
 import ChevronDown from "$lib/assets/chevron-down.svelte";
 import ChevronRight from "$lib/assets/chevron-right.svelte";
+import Eye from "$lib/assets/eye.svelte";
+import EyeClosed from "$lib/assets/eye-closed.svelte";
 
 import { dueToday } from "$lib/stores/todo_store.svelte";
 import { dueTomorrow } from "$lib/stores/todo_store.svelte";
@@ -22,6 +24,13 @@ import { showThisWeek } from "$lib/stores/todo_store.svelte";
 import { showThisMonth } from "$lib/stores/todo_store.svelte";
 import { showLater } from "$lib/stores/todo_store.svelte";
 import { showIndefinite } from "$lib/stores/todo_store.svelte";
+
+import { showMainToday } from "$lib/stores/todo_store.svelte";
+import { showMainTomorrow } from "$lib/stores/todo_store.svelte";
+import { showMainThisWeek } from "$lib/stores/todo_store.svelte";
+import { showMainThisMonth } from "$lib/stores/todo_store.svelte";
+import { showMainLater } from "$lib/stores/todo_store.svelte";
+import { showMainIndefinite } from "$lib/stores/todo_store.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
 
@@ -54,6 +63,34 @@ const toggleShow = (tf: TimeFrame) => {
       break;
   }
 };
+
+const toggleMainShow = (tf: TimeFrame) => {
+  switch (tf) {
+    case "TODAY":
+      showMainToday.value = !showMainToday.value;
+      break;
+
+    case "TOMORROW":
+      showMainTomorrow.value = !showMainTomorrow.value;
+      break;
+
+    case "WEEK":
+      showMainThisWeek.value = !showMainThisWeek.value;
+      break;
+
+    case "MONTH":
+      showMainThisMonth.value = !showMainThisMonth.value;
+      break;
+
+    case "LATER":
+      showMainLater.value = !showMainLater.value;
+      break;
+
+    default: // indefinite
+      showMainIndefinite.value = !showMainIndefinite.value;
+      break;
+  }
+};
 </script>
 
 <div class="sidebar"> 
@@ -69,6 +106,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">Due Today</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("TODAY")} on:keyup={() => toggleMainShow("TODAY")}>
+        {#if showMainToday.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showToday.value}
@@ -87,6 +132,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">Due Tomorrow</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("TOMORROW")} on:keyup={() => toggleMainShow("TOMORROW")}>
+        {#if showMainTomorrow.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showTomorrow.value}
@@ -105,6 +158,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">Due This Week</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("WEEK")} on:keyup={() => toggleMainShow("WEEK")}>
+        {#if showMainThisWeek.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showThisWeek.value}
@@ -123,6 +184,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">Due This Month</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("MONTH")} on:keyup={() => toggleMainShow("MONTH")}>
+        {#if showMainThisMonth.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showThisMonth.value}
@@ -141,6 +210,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">Due Later</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("LATER")} on:keyup={() => toggleMainShow("LATER")}>
+        {#if showMainLater.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showLater.value}
@@ -159,6 +236,14 @@ const toggleShow = (tf: TimeFrame) => {
         {/if}
         </div>
         <h5 class="due">No Due Date</h5>
+
+        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("INDEFINITE")} on:keyup={() => toggleMainShow("INDEFINITE")}>
+        {#if showMainIndefinite.value}
+        <Eye />
+        {:else}
+        <EyeClosed />
+        {/if}
+        </div>
       </div>
       <hr>
       {#if showIndefinite.value}
