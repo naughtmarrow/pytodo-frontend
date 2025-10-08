@@ -166,4 +166,8 @@ button {
   border-radius: 5px;
 }
 
+hr {
+  color: var(--faded-global-foreground)
+}
+
 </style>

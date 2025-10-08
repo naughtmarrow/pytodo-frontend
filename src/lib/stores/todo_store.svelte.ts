@@ -12,6 +12,13 @@ export let dueThisMonth: { list: number[] } = $state({ list: [] });
 export let dueLater: { list: number[] } = $state({ list: [] });
 export let dueIndefinite: { list: number[] } = $state({ list: [] });
 
+export let showToday: { value: boolean } = $state({ value: false })
+export let showTomorrow: { value: boolean } = $state({ value: false })
+export let showThisWeek: { value: boolean } = $state({ value: false })
+export let showThisMonth: { value: boolean } = $state({ value: false })
+export let showLater: { value: boolean } = $state({ value: false })
+export let showIndefinite: { value: boolean } = $state({ value: false })
+
 // these are just arrays since we don't need any more information
 
 export const resetList = () => {
