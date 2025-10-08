@@ -1,9 +1,37 @@
 <script lang="ts">
 import Burger from "$lib/assets/burger.svelte";
 import Eye from "$lib/assets/eye.svelte";
+import EyeClosed from "$lib/assets/eye-closed.svelte";
 import User from "$lib/assets/user.svelte";
 
+import type { Priority } from "$lib/types/priority";
+
+import { showUrgent } from "$lib/stores/todo_store.svelte";
+import { showImportant } from "$lib/stores/todo_store.svelte";
+import { showNormal } from "$lib/stores/todo_store.svelte";
+import { showOptional } from "$lib/stores/todo_store.svelte";
+
 import './priority.css'
+
+const toggleShowPriority = (priority: Priority) => {
+  switch (priority) {
+    case "URGENT":
+      showUrgent.value = !showUrgent.value;
+      break;
+
+    case "IMPORTANT":
+      showImportant.value = !showImportant.value;
+      break;
+
+    case "NORMAL":
+      showNormal.value = !showNormal.value;
+      break;
+
+    case "OPTIONAL":
+      showOptional.value = !showOptional.value;
+      break;
+  }
+}
 </script>
 
 <nav class="nav">
@@ -11,10 +39,34 @@ import './priority.css'
     <div class="burger"><Burger /></div>
   </div>
   <div class="left-nav">
-    <div class="priority urgent"><Eye /></div>
-    <div class="priority important"><Eye /></div>
-    <div class="priority normal"><Eye /></div>
-    <div class="priority optional"><Eye /></div>
+    <div class="priority urgent" role="button" tabindex="0" on:click={() => toggleShowPriority("URGENT")} on:keyup={() => toggleShowPriority("URGENT")}>
+      {#if showUrgent.value}
+      <Eye />
+      {:else}
+      <EyeClosed />
+      {/if}
+    </div>
+    <div class="priority important" role="button" tabindex="0" on:click={() => toggleShowPriority("IMPORTANT")} on:keyup={() => toggleShowPriority("IMPORTANT")}>
+      {#if showImportant.value}
+      <Eye />
+      {:else}
+      <EyeClosed />
+      {/if}
+    </div> 
+    <div class="priority normal" role="button" tabindex="0" on:click={() => toggleShowPriority("NORMAL")} on:keyup={() => toggleShowPriority("NORMAL")}>
+      {#if showNormal.value}
+      <Eye />
+      {:else}
+      <EyeClosed />
+      {/if}
+    </div> 
+    <div class="priority optional" role="button" tabindex="0" on:click={() => toggleShowPriority("OPTIONAL")} on:keyup={() => toggleShowPriority("OPTIONAL")}>
+      {#if showOptional.value}
+      <Eye />
+      {:else}
+      <EyeClosed />
+      {/if}
+    </div> 
     <div class="user"><User /></div>
   </div>
 </nav>

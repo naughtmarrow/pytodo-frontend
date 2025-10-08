@@ -5,6 +5,7 @@ import Sidebar from "$lib/components/Sidebar.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
 import type { Todo } from "$lib/types/todo";
+import type { Priority } from "$lib/types/priority";
 
 import { dueToday } from "$lib/stores/todo_store.svelte";
 import { dueTomorrow } from "$lib/stores/todo_store.svelte";

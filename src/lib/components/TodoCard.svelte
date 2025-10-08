@@ -1,7 +1,14 @@
 <script lang="ts">
 import Trash from "$lib/assets/trash.svelte";
 import type { Todo } from "$lib/types/todo";
+import type { Priority } from "$lib/types/priority";
+
 import "./priority.css";
+
+import { showUrgent } from "$lib/stores/todo_store.svelte";
+import { showImportant } from "$lib/stores/todo_store.svelte";
+import { showNormal } from "$lib/stores/todo_store.svelte";
+import { showOptional } from "$lib/stores/todo_store.svelte";
 
 type _Props = Todo & { timeframe: string }
 
@@ -45,8 +52,26 @@ const getDue = (timeframe: string):string => {
   return "later"
 }
 
+const returnShowable = (priority: Priority): boolean => {
+  if (priority === "URGENT" && !showUrgent.value) {
+    return false;
+  }
+  if (priority === "IMPORTANT" && !showImportant.value) {
+    return false;
+  }
+  if (priority === "NORMAL" && !showNormal.value) {
+    return false;
+  }
+  if (priority === "OPTIONAL" && !showOptional.value) {
+    return false;
+  }
+
+  return true;
+};
+
 </script>
 
+{#if returnShowable(todo.priority)}
 <div class="todo-card">
   <div class="todo">
     <div class="top">
@@ -65,6 +90,7 @@ const getDue = (timeframe: string):string => {
     <button><Trash /></button>
   </div>
 </div>
+{/if}
 
 <style>
 @media screen and (max-width: 600px) {
