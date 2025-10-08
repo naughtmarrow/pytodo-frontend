@@ -94,7 +94,7 @@ const toggleMainShow = (tf: TimeFrame) => {
 </script>
 
 <div class="sidebar"> 
-  <h1>Todo</h1>
+  <p class="title">Todo</p>
   <ul>
     <li>
       <div class="top">
@@ -105,7 +105,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">Due Today</h5>
+        <p class="due">Due Today</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("TODAY")} on:keyup={() => toggleMainShow("TODAY")}>
         {#if showMainToday.value}
@@ -131,7 +131,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">Due Tomorrow</h5>
+        <p class="due">Due Tomorrow</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("TOMORROW")} on:keyup={() => toggleMainShow("TOMORROW")}>
         {#if showMainTomorrow.value}
@@ -157,7 +157,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">Due This Week</h5>
+        <p class="due">Due This Week</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("WEEK")} on:keyup={() => toggleMainShow("WEEK")}>
         {#if showMainThisWeek.value}
@@ -183,7 +183,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">Due This Month</h5>
+        <p class="due">Due This Month</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("MONTH")} on:keyup={() => toggleMainShow("MONTH")}>
         {#if showMainThisMonth.value}
@@ -209,7 +209,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">Due Later</h5>
+        <p class="due">Due Later</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("LATER")} on:keyup={() => toggleMainShow("LATER")}>
         {#if showMainLater.value}
@@ -235,7 +235,7 @@ const toggleMainShow = (tf: TimeFrame) => {
         <ChevronRight />
         {/if}
         </div>
-        <h5 class="due">No Due Date</h5>
+        <p class="due">No Due Date</p>
 
         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("INDEFINITE")} on:keyup={() => toggleMainShow("INDEFINITE")}>
         {#if showMainIndefinite.value}
@@ -260,6 +260,9 @@ const toggleMainShow = (tf: TimeFrame) => {
     width: 100%;
     height: 100%;
     overflow-y: auto;
+
+    font-size: 1.1em;
+    padding: 0.8em 0.3em;
   }
 
   .top {
@@ -278,19 +281,30 @@ const toggleMainShow = (tf: TimeFrame) => {
   }
 
   .due {
+    font-size: 1.3em;
     flex: 1 1;
   }
 
-  h1, h5, p {
-    color: var(--global-foreground);
+  .title {
+    font-size: 2.1em;
+    margin-bottom: 0.4em;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    margin-bottom: 0.7em;
   }
 
   p {
-    margin-left: 1em;
+    color: var(--global-foreground);
   }
 
   hr {
-    color: var(--faded-global-foreground)
+    color: var(--faded-global-foreground);
+    margin-bottom: 0.3em;
   }
 
 </style>
