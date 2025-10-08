@@ -10,6 +10,7 @@ import ChevronDown from "$lib/assets/chevron-down.svelte";
 import ChevronRight from "$lib/assets/chevron-right.svelte";
 import Eye from "$lib/assets/eye.svelte";
 import EyeClosed from "$lib/assets/eye-closed.svelte";
+import Cross from "$lib/assets/cross.svelte";
 
 import { dueToday } from "$lib/stores/todo_store.svelte";
 import { dueTomorrow } from "$lib/stores/todo_store.svelte";
@@ -31,6 +32,8 @@ import { showMainThisWeek } from "$lib/stores/todo_store.svelte";
 import { showMainThisMonth } from "$lib/stores/todo_store.svelte";
 import { showMainLater } from "$lib/stores/todo_store.svelte";
 import { showMainIndefinite } from "$lib/stores/todo_store.svelte";
+
+import { showSidebar } from "$lib/stores/general.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
 
@@ -91,10 +94,20 @@ const toggleMainShow = (tf: TimeFrame) => {
       break;
   }
 };
+
+const toggleSidebar = () => {
+  showSidebar.value = !showSidebar.value;
+}
+
 </script>
 
 <div class="sidebar"> 
-  <p class="title">Todo</p>
+  <div class="title-top">
+    <p class="title">Todo</p>
+    <div class="cross" role="button" tabindex="0" on:click={toggleSidebar} on:keyup={toggleSidebar}>
+      <Cross />
+    </div>
+  </div>
   <ul>
     <li>
       <div class="top">
@@ -151,21 +164,21 @@ const toggleMainShow = (tf: TimeFrame) => {
     <li>
       <div class="top">
        <div role="button" tabindex="0" class="chevron" on:click={() => toggleShow("WEEK")} on:keyup={() => toggleShow("WEEK")}> 
-        {#if showThisWeek.value}
-        <ChevronDown />
-        {:else}
-        <ChevronRight />
-        {/if}
-        </div>
-        <p class="due">Due This Week</p>
+         {#if showThisWeek.value}
+         <ChevronDown />
+         {:else}
+         <ChevronRight />
+         {/if}
+         </div>
+         <p class="due">Due This Week</p>
 
-        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("WEEK")} on:keyup={() => toggleMainShow("WEEK")}>
-        {#if showMainThisWeek.value}
-        <Eye />
-        {:else}
-        <EyeClosed />
-        {/if}
-        </div>
+         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("WEEK")} on:keyup={() => toggleMainShow("WEEK")}>
+         {#if showMainThisWeek.value}
+         <Eye />
+         {:else}
+         <EyeClosed />
+         {/if}
+         </div>
       </div>
       <hr>
       {#if showThisWeek.value}
@@ -177,21 +190,21 @@ const toggleMainShow = (tf: TimeFrame) => {
     <li>
       <div class="top">
        <div role="button" tabindex="0" class="chevron" on:click={() => toggleShow("MONTH")} on:keyup={() => toggleShow("MONTH")}> 
-        {#if showThisMonth.value}
-        <ChevronDown />
-        {:else}
-        <ChevronRight />
-        {/if}
-        </div>
-        <p class="due">Due This Month</p>
+         {#if showThisMonth.value}
+         <ChevronDown />
+         {:else}
+         <ChevronRight />
+         {/if}
+         </div>
+         <p class="due">Due This Month</p>
 
-        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("MONTH")} on:keyup={() => toggleMainShow("MONTH")}>
-        {#if showMainThisMonth.value}
-        <Eye />
-        {:else}
-        <EyeClosed />
-        {/if}
-        </div>
+         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("MONTH")} on:keyup={() => toggleMainShow("MONTH")}>
+         {#if showMainThisMonth.value}
+         <Eye />
+         {:else}
+         <EyeClosed />
+         {/if}
+         </div>
       </div>
       <hr>
       {#if showThisMonth.value}
@@ -203,21 +216,21 @@ const toggleMainShow = (tf: TimeFrame) => {
     <li>
       <div class="top">
        <div role="button" tabindex="0" class="chevron" on:click={() => toggleShow("LATER")} on:keyup={() => toggleShow("LATER")}> 
-        {#if showLater.value}
-        <ChevronDown />
-        {:else}
-        <ChevronRight />
-        {/if}
-        </div>
-        <p class="due">Due Later</p>
+         {#if showLater.value}
+         <ChevronDown />
+         {:else}
+         <ChevronRight />
+         {/if}
+         </div>
+         <p class="due">Due Later</p>
 
-        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("LATER")} on:keyup={() => toggleMainShow("LATER")}>
-        {#if showMainLater.value}
-        <Eye />
-        {:else}
-        <EyeClosed />
-        {/if}
-        </div>
+         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("LATER")} on:keyup={() => toggleMainShow("LATER")}>
+         {#if showMainLater.value}
+         <Eye />
+         {:else}
+         <EyeClosed />
+         {/if}
+         </div>
       </div>
       <hr>
       {#if showLater.value}
@@ -229,21 +242,21 @@ const toggleMainShow = (tf: TimeFrame) => {
     <li>
       <div class="top">
        <div role="button" tabindex="0" class="chevron" on:click={() => toggleShow("INDEFINITE")} on:keyup={() => toggleShow("INDEFINITE")}> 
-        {#if showIndefinite.value}
-        <ChevronDown />
-        {:else}
-        <ChevronRight />
-        {/if}
-        </div>
-        <p class="due">No Due Date</p>
+         {#if showIndefinite.value}
+         <ChevronDown />
+         {:else}
+         <ChevronRight />
+         {/if}
+         </div>
+         <p class="due">No Due Date</p>
 
-        <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("INDEFINITE")} on:keyup={() => toggleMainShow("INDEFINITE")}>
-        {#if showMainIndefinite.value}
-        <Eye />
-        {:else}
-        <EyeClosed />
-        {/if}
-        </div>
+         <div role="button" tabindex="0" class="chevron" on:click={() => toggleMainShow("INDEFINITE")} on:keyup={() => toggleMainShow("INDEFINITE")}>
+         {#if showMainIndefinite.value}
+         <Eye />
+         {:else}
+         <EyeClosed />
+         {/if}
+         </div>
       </div>
       <hr>
       {#if showIndefinite.value}
@@ -256,6 +269,25 @@ const toggleMainShow = (tf: TimeFrame) => {
 </div>
 
 <style>
+  @media screen and (max-width: 1080px) {
+    .sidebar {
+      background-color: var(--secondary-background);
+    }
+
+    .cross {
+      color: var(--global-foreground);
+      width: 32px;
+      aspect-ratio: 1 1;
+      transform: translateY(-10px);
+    }
+  }
+
+  @media screen and (min-width: 1080px) {
+    .cross {
+      display: none;
+    }
+  }
+
   .sidebar {
     width: 100%;
     height: 100%;
@@ -263,6 +295,11 @@ const toggleMainShow = (tf: TimeFrame) => {
 
     font-size: 1.1em;
     padding: 0.8em 0.3em;
+  }
+
+  .title-top {
+    display: flex;
+    justify-content: space-between;
   }
 
   .top {

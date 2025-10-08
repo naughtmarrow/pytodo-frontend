@@ -20,6 +20,10 @@ import { showMainThisMonth } from "$lib/stores/todo_store.svelte";
 import { showMainLater } from "$lib/stores/todo_store.svelte";
 import { showMainIndefinite } from "$lib/stores/todo_store.svelte";
 
+import { showSidebar } from "$lib/stores/general.svelte";
+
+let screenWidth: number;
+
 const returnTodo = (id: number): Todo => {
   const todo_obtained: Todo | undefined = TodoList.map.get(id);
   if (todo_obtained === undefined) {
@@ -33,13 +37,17 @@ const returnTodo = (id: number): Todo => {
     return todo_obtained;
   }
 };
+
 </script>
 
-<div class="content">
+<svelte:window bind:innerWidth={screenWidth}/>
 
+<div class="content">
+  {#if showSidebar.value || screenWidth >= 1080}
   <div class="left-side">
     <Sidebar />
   </div>
+  {/if}
   <div class="right-side">
     <Navbar />
     <ul class="todo-list">
@@ -87,8 +95,9 @@ const returnTodo = (id: number): Todo => {
 
 @media screen and (max-width: 1080px){
   .left-side {
-    background-color: var(--secondary-background);
-    display: none;
+    position: absolute;
+    width: 300px;
+    height: 100vh;
   }
 }
 

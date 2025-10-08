@@ -11,6 +11,8 @@ import { showImportant } from "$lib/stores/todo_store.svelte";
 import { showNormal } from "$lib/stores/todo_store.svelte";
 import { showOptional } from "$lib/stores/todo_store.svelte";
 
+import { showSidebar } from "$lib/stores/general.svelte";
+
 import './priority.css'
 
 const toggleShowPriority = (priority: Priority) => {
@@ -32,11 +34,18 @@ const toggleShowPriority = (priority: Priority) => {
       break;
   }
 }
+
+const toggleSidebar = () => {
+  showSidebar.value = !showSidebar.value;
+}
+
 </script>
 
 <nav class="nav">
   <div class="right-nav">
-    <div class="burger"><Burger /></div>
+    <div class="burger" role="button" tabindex="0" on:click={toggleSidebar} on:keyup={toggleSidebar}>
+      <Burger />
+    </div>
   </div>
   <div class="left-nav">
     <div class="priority urgent" role="button" tabindex="0" on:click={() => toggleShowPriority("URGENT")} on:keyup={() => toggleShowPriority("URGENT")}>
@@ -73,18 +82,19 @@ const toggleShowPriority = (priority: Priority) => {
 
 <style>
 /* mobile navbar */
-@media screen and (max-width: 1080px) {
-  .burger {
-    color: var(--global-foreground);
-    width: 32px;
+  @media screen and (max-width: 1080px) {
+    .burger {
+      color: var(--global-foreground);
+      width: 32px;
+      aspect-ratio: 1 1;
+    }
   }
-}
 
-@media screen and (min-width: 1080px) {
-  .burger {
-    display: none;
+  @media screen and (min-width: 1080px) {
+    .burger {
+      display: none;
+    }
   }
-}
 
 nav {
   display: flex;
