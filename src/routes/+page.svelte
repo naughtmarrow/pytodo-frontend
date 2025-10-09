@@ -1,9 +1,14 @@
 <script lang="ts">
+export let data;
+
 import TodoCard from "$lib/components/TodoCard.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
 import Sidebar from "$lib/components/Sidebar.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
+import { setTodos } from "$lib/helpers/list_setter";
+import { onMount } from "svelte";
+
 import type { Todo } from "$lib/types/todo";
 
 import { dueToday } from "$lib/stores/todo_store.svelte";
@@ -38,6 +43,9 @@ const returnTodo = (id: number): Todo => {
   }
 };
 
+onMount(() => {
+  setTodos(data.list);
+});
 </script>
 
 <svelte:window bind:innerWidth={screenWidth}/>
