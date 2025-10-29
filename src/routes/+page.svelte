@@ -1,5 +1,5 @@
 <script lang="ts">
-export let data;
+export let data: {list: []};
 
 import TodoCard from "$lib/components/TodoCard.svelte";
 import Navbar from "$lib/components/Navbar.svelte";

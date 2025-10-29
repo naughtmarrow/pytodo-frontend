@@ -1,63 +1,32 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
 import User from "$lib/assets/user.svelte";
-import { redirect } from "@sveltejs/kit";
+import type { ActionData } from "./$types";
 
-// TODO: add behaviour to have this variable changed
-// within the submit, remove the default action
-let errored: boolean = $state(false)
-
-let username: string = $state("")
-let password: string = $state("")
-
-const handleSubmit = async (event: Event) => {
-  event.preventDefault()
-
-  const body = JSON.stringify({
-    username: username,
-    password: password
-  })
-
-  const response = await fetch("http://localhost:5173/login", {
-    method: "POST",
-    headers: {
-      "ContentType": "application/json",
-    },
-    body: body
-  })
-
-  if (!response.ok) {
-    errored = true
-    redirect(302, "/login")
-  }
-
-  errored = false
-  goto("/")
-}
+export let form: ActionData;
 </script>
 
 <div class="login">
-  <form onsubmit={handleSubmit}>
+  <form method="POST" action="?/registration">
     <div class="user">
       <User />
     </div>
 
     <div class="input-box">
     <label for="username">
-      <input name="username" type="text" placeholder="Username" bind:value={username} />
+      <input name="username" type="text" placeholder="Username" />
     </label>
 
     <label for="password">
-      <input name="password" type="password" placeholder="Password" bind:value={password} />
+      <input name="password" type="password" placeholder="Password" />
     </label>
 
     <button>Submit</button>
     </div>
 
 
-    <a href="/registration">Don't have an account? Register</a>
+    <a href="/login">Already have an account? Login</a>
 
-    {#if errored }
+    {#if form?.incorrect }
       <p class="error">Authorization failed, ensure the data entered is correct</p>
     {/if}
   </form>

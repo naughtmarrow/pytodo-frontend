@@ -76,7 +76,14 @@ const toggleSidebar = () => {
       <EyeClosed />
       {/if}
     </div> 
-    <div class="user"><User /></div>
+    <div class="user">
+      <User />
+      <div class="user-menu">
+        <ul>
+          <li><a id="logout" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -123,6 +130,43 @@ nav {
   color: var(--global-foreground);
   width: 54px;
   margin: 0 0 0 0.1em;
+}
+
+.user-menu {
+  display: none;
+  position: absolute;
+  transform: translateX(-100px);
+  width: 120px;
+  height: auto;
+
+  background-color: var(--secondary-background);
+
+  ul {
+    padding: 0.3em 0;
+    width: 100%;
+    list-style: none;
+    vertical-align: center;
+  }
+
+  li {
+    width: 100%;
+    height: 30px;
+    vertical-align: center;
+    margin-top: 3px;
+  }
+
+  a, a:visited {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--global-foreground);
+    text-decoration: none;
+    text-align: center;
+  }
+}
+
+.user:hover .user-menu {
+  display: block;
 }
 
 </style>
