@@ -12,3 +12,16 @@ export const priority_from_num = (num: number): Priority  =>  {
       return "OPTIONAL"
   }
 }
+
+export const num_from_priority = (priority: Priority): number =>  {
+  switch (priority) {
+    case "URGENT":
+      return 1
+    case "IMPORTANT":
+      return 2
+    case "NORMAL":
+      return 3
+    default:
+      return 4
+  }
+}

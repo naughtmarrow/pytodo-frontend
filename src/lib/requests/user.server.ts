@@ -2,7 +2,7 @@ import { AuthorizationError } from "$lib/server/errors";
 
 import { BACKEND_HOST, BACKEND_PORT } from "$env/static/private";
 import type { Todo } from "$lib/types/todo";
-import { priority_from_num } from "$lib/helpers/priority_from_num";
+import { priority_from_num } from "$lib/helpers/priority_converters";
 
 const main_url: string = `http://${BACKEND_HOST}:${BACKEND_PORT}`;
 

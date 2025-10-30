@@ -30,6 +30,7 @@ export const TimeCategorizer = (todo: Todo) =>  {
 
   if (todo.date_due === undefined) {
     dueIndefinite.list.push(todo.id);
+    todo.time_category_key = "INDEFINITE"
     return;
   }
 
@@ -40,11 +41,13 @@ export const TimeCategorizer = (todo: Todo) =>  {
 
   if (time_due < today.getTime()) {
     dueToday.list.push(todo.id);
+    todo.time_category_key = "TODAY"
     return;
   }
 
   if (time_due < tomorrow.getTime()) {
     dueTomorrow.list.push(todo.id);
+    todo.time_category_key = "TOMORROW"
     return;
   }
 
@@ -53,6 +56,7 @@ export const TimeCategorizer = (todo: Todo) =>  {
   if (date_due.getTime() === firstDayWeek.getTime()) {
     // if they are the same day then the todo's due week is the same as the current week
     dueThisWeek.list.push(todo.id);
+    todo.time_category_key = "WEEK"
     return;
   }
 
@@ -61,7 +65,10 @@ export const TimeCategorizer = (todo: Todo) =>  {
   if (date_due.getTime() === firstDayMonth.getTime()) {
     // same as before but for months
     dueThisMonth.list.push(todo.id);
+    todo.time_category_key = "MONTH"
     return;
   }
   dueLater.list.push(todo.id);
+  todo.time_category_key = "LATER"
+
 }

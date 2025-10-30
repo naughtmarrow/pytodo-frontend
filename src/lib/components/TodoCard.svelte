@@ -9,8 +9,7 @@ import { showUrgent } from "$lib/stores/todo_store.svelte";
 import { showImportant } from "$lib/stores/todo_store.svelte";
 import { showNormal } from "$lib/stores/todo_store.svelte";
 import { showOptional } from "$lib/stores/todo_store.svelte";
-
-import { deleteTodo } from "$lib/requests/todo_list";
+    import { unsetTodo } from "$lib/helpers/list_setter";
 
 type _Props = Todo & { timeframe: string };
 
@@ -70,6 +69,24 @@ const returnShowable = (priority: Priority): boolean => {
 
   return true;
 };
+
+const deleteTodo = async (id: number) => {
+  const response = await fetch("http://localhost:5173/todos", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    });
+
+    if (!response.ok) {
+      console.log("response failed")
+    }else {
+      unsetTodo(id)
+    }
+}
 
 </script>
 

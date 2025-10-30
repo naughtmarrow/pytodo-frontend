@@ -1,9 +1,10 @@
 <script lang="ts">
-export let data: {list: []};
+let { data }: PageProps = $props();
 
 import TodoCard from "$lib/components/TodoCard.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
 import Sidebar from "$lib/components/Sidebar.svelte";
+import TodoCreation from "$lib/components/TodoCreation.svelte";
 
 import { TodoList } from "$lib/stores/todo_store.svelte";
 import { setTodos } from "$lib/helpers/list_setter";
@@ -26,8 +27,11 @@ import { showMainLater } from "$lib/stores/todo_store.svelte";
 import { showMainIndefinite } from "$lib/stores/todo_store.svelte";
 
 import { showSidebar } from "$lib/stores/general.svelte";
+import type { PageProps } from "./$types";
 
-let screenWidth: number;
+let showCreate: boolean = $state(false)
+
+let screenWidth: number = $state(0);
 
 const returnTodo = (id: number): Todo => {
   const todo_obtained: Todo | undefined = TodoList.map.get(id);
@@ -43,12 +47,21 @@ const returnTodo = (id: number): Todo => {
   }
 };
 
+const toggleCreate = () => {
+  showCreate = !showCreate
+}
+
 onMount(() => {
   setTodos(data.list);
 });
 </script>
 
 <svelte:window bind:innerWidth={screenWidth}/>
+
+{#if showCreate}
+<div class="smoke-screen"></div>
+<div class="creator-container"><TodoCreation toggler={toggleCreate}/></div>
+{/if}
 
 <div class="content">
   {#if showSidebar.value || screenWidth >= 1080}
@@ -58,6 +71,9 @@ onMount(() => {
   {/if}
   <div class="right-side">
     <Navbar />
+
+    <button class="new-todo-button" onclick={toggleCreate}>Create new todo</button>
+
     <ul class="todo-list">
       {#if showMainToday.value}
       {#each dueToday.list as id }
@@ -95,8 +111,8 @@ onMount(() => {
       {/each}
       {/if}
     </ul>
-  </div>
 
+  </div>
 </div>
 
 <style>
@@ -125,6 +141,7 @@ onMount(() => {
   flex: 1 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .todo-list {
@@ -132,6 +149,29 @@ onMount(() => {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+
+  width: 100%;
+}
+
+.new-todo-button {
+  padding: 0.2em 2em;
+}
+
+.creator-container {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 50%;
+}
+
+.smoke-screen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 </style>
